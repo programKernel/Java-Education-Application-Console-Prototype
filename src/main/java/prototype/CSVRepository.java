@@ -38,6 +38,19 @@ public class CSVRepository implements Repository {
         return list;
     }
 
+    @Override
+    public String saveProblemsToFile(List<Problem> problems) {
+        //todo save comments to file
+        return "Comments saved.";
+    }
+
+    @Override
+    public List<Problem> loadProblemsFromFile() {
+        //todo load comments from file
+        List<Problem> problems = new ArrayList<>();
+        return problems;
+    }
+
     public List<String> loadUsersCSV() {
         List<String> list = new ArrayList<>();
         try {
@@ -51,5 +64,7 @@ public class CSVRepository implements Repository {
         }
         return list;
     }
+
+
 
 }

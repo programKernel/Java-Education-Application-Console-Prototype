@@ -23,25 +23,15 @@ public class Service {
 
     public List<Problem> basicProblemFactory() {
         Problem basics1 = new Problem("Wyświetlanie w konsoli",
-                "Jak wygląda instrukcja, która drukuje w języku Java?",
-                "System.out.println();");
-        Problem basics2 = new Problem("Enter po wydrukowaniu",
-                "Jaki fragment instrukcji System.out.println(); odpowiada za pojawienie się entera po wydrukowanej zawartości?",
-                "ln");
-        Problem basics3 = new Problem("Warunki",
-                "Jak stawiamy warunek?",
-                "if");
+                "Jak wygląda instrukcja, która drukuje w języku Java?");
         List<Problem> basicProblems = new ArrayList<>();
         basicProblems.add(basics1);
-        basicProblems.add(basics2);
-        basicProblems.add(basics3);
         return basicProblems;
     }
 
     public List<Problem> OOPProblemFactory() {
         Problem OOP1 = new Problem("Tworzenie obiektu",
-                "Jaką instrukcją należy stworzyć obiekt przykładowej klasy Controller?",
-                "Controller controller = new Controller();");
+                "Jaką instrukcją należy stworzyć obiekt przykładowej klasy Controller?");
         List<Problem> OOPProblems = new ArrayList<>();
         OOPProblems.add(OOP1);
         return OOPProblems;

@@ -134,14 +134,10 @@ public class Controller {
             System.out.println("\n" + currentProblem.getTitle().toUpperCase(Locale.ROOT) + "\n" + currentProblem.getQuestion());
             System.out.print("\nWpisz odpowiedź lub cofnij się wpisując 0: ");
             String answer3 = reader.nextLine();
-            if (answer3.equals(currentProblem.getCorrectAnswer())) {
-                System.out.println("Gratulacje! Poprawna odpowiedź.");
-                running = false;
-            } else if (answer3.equals("0")) {
-                running = false;
-            } else {
-                System.out.println("Odpowiedź nie jest poprawna. Spróbuj jeszcze raz!");
+            if (!answer3.equals("0")) {
+                System.out.println("Odpowiedź została zapisana.");
             }
+            running = false;
         }
     }
 }

@@ -1,14 +1,21 @@
 package prototype;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Problem {
     private String title = "";
     private String question = "";
-    private String correctAnswer;
+    private List<Comment> answers;
 
-    Problem(String title, String question, String correctAnswer) {
+    Problem(String title, String question) {
+        this(title,question,new ArrayList<>());
+    }
+
+    Problem(String title, String question, List<Comment> answers) {
         this.title = title;
         this.question = question;
-        this.correctAnswer = correctAnswer;
+        this.answers = answers;
     }
 
     public String getTitle() {
@@ -19,7 +26,7 @@ public class Problem {
         return question;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
+    public List<Comment> getAnswers() {
+        return answers;
     }
 }
