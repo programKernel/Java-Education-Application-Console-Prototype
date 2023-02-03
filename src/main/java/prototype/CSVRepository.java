@@ -39,16 +39,16 @@ public class CSVRepository implements Repository {
     }
 
     @Override
-    public String saveProblemsToFile(List<Problem> problems) {
+    public String updateCategoriesToFile(List<Category> categories) {
         //todo save comments to file
         return "Comments saved.";
     }
 
     @Override
-    public List<Problem> loadProblemsFromFile() {
+    public List<Category> loadCategoriesFromFile() {
         //todo load comments from file
-        List<Problem> problems = new ArrayList<>();
-        return problems;
+        List<Category> categoryList = new ArrayList<>();
+        return categoryList;
     }
 
     public List<String> loadUsersCSV() {

@@ -7,7 +7,7 @@ public interface Repository {
 
     public abstract List<User> loadUsersFromFile();
 
-    public abstract String saveProblemsToFile(List<Problem> problems);
+    public abstract String updateCategoriesToFile(List<Category> categories);
 
-    public abstract List<Problem> loadProblemsFromFile();
+    public abstract List<Category> loadCategoriesFromFile();
 }

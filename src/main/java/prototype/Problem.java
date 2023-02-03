@@ -1,21 +1,22 @@
 package prototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Problem {
+public class Problem implements Serializable {
     private String title = "";
     private String question = "";
-    private List<Comment> answers;
+    private List<Comment> comments;
 
     Problem(String title, String question) {
         this(title,question,new ArrayList<>());
     }
 
-    Problem(String title, String question, List<Comment> answers) {
+    Problem(String title, String question, List<Comment> comments) {
         this.title = title;
         this.question = question;
-        this.answers = answers;
+        this.comments = comments;
     }
 
     public String getTitle() {
@@ -26,7 +27,11 @@ public class Problem {
         return question;
     }
 
-    public List<Comment> getAnswers() {
-        return answers;
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }

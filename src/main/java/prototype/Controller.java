@@ -15,7 +15,7 @@ public class Controller {
     public void mainMenu() {
         boolean menuRun = true;
         while (menuRun) {
-            System.out.println("\n1. Zarejestruj się\n2. Zaloguj się\n3. Wyloguj się i wyjdź");
+            System.out.println("\n1. Zarejestruj się\n2. Zaloguj się\n3. Wyloguj się\n4. Wyjdź");
             System.out.print("Wybierz jedną z opcji: ");
             String menuInput = reader.nextLine();
 
@@ -31,6 +31,14 @@ public class Controller {
                     menuRun = false;
                     break;
                 case "3":
+                    if (service.getCurrentUser() == null) {
+                        System.out.println("Użytkownik nie jest zalogowany, więc nie może się wylogować.");
+                    } else {
+                        service.clearCurrentUser();
+                        System.out.println("Wylogowano pomyślnie.");
+                    }
+                    break;
+                case "4":
                     System.out.println("Do zobaczenia.");
                     menuRun = false;
                     break;
@@ -68,6 +76,7 @@ public class Controller {
         }
         User newUser = new User(newUsername,newPassword);
         service.addUserToUserList(newUser);
+        service.setCurrentUser(newUser);
         System.out.println("Witaj, " + newUser.getUsername() + ".");
     }
 
@@ -80,6 +89,7 @@ public class Controller {
             String password = reader.nextLine();
             boolean doesUserExist = service.doesUserExist(username, password);
             if (doesUserExist) {
+                service.setCurrentUser(new User(username, password));
                 System.out.println("Witaj ponownie, " + username + ".");
                 running = false;
             } else {
@@ -108,8 +118,8 @@ public class Controller {
         }
     }
 
-    public void displayQuestions(int answer) {
-        Category chosenCategory = service.getCategoryByIndex(answer - 1);
+    public void displayQuestions(int categoryIndex) {
+        Category chosenCategory = service.getCategoryByIndex(categoryIndex - 1);
         boolean running1 = true;
         while (running1) {
             System.out.println("\nZadania z działu " + chosenCategory.getCategoryName() + ":");
@@ -122,20 +132,29 @@ public class Controller {
             if (answer2 == 0) {
                 running1 = false;
             } else {
-                answerQuestion(chosenCategory,answer2);
+                answerQuestion(chosenCategory, categoryIndex, answer2);
             }
         }
     }
 
-    public void answerQuestion(Category chosenCategory, int answer) {
+    public void answerQuestion(Category chosenCategory, int categoryIndex, int problemIndex) {
         boolean running = true;
         while (running) {
-            Problem currentProblem = chosenCategory.getProblems().get(answer - 1);
+            Problem currentProblem = chosenCategory.getProblems().get(problemIndex - 1);
             System.out.println("\n" + currentProblem.getTitle().toUpperCase(Locale.ROOT) + "\n" + currentProblem.getQuestion());
-            System.out.print("\nWpisz odpowiedź lub cofnij się wpisując 0: ");
+            if (currentProblem.getComments().size() != 0) {
+                System.out.println("KOMENTARZE:\n");
+                for (int i = 0;i < currentProblem.getComments().size();i++) {
+                    System.out.println(currentProblem.getComments().get(i).getSender().getUsername());
+                    System.out.println(currentProblem.getComments().get(i).getAnswer() + "\n");
+                }
+            }
+            System.out.print("Wpisz komentarz lub cofnij się wpisując 0: ");
             String answer3 = reader.nextLine();
             if (!answer3.equals("0")) {
+                service.getCategories().get(categoryIndex - 1).getProblems().get(problemIndex - 1).addComment(new Comment(service.getCurrentUser(), answer3));
                 System.out.println("Odpowiedź została zapisana.");
+                service.updateCategories();
             }
             running = false;
         }

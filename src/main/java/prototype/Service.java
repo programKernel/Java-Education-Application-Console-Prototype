@@ -5,20 +5,35 @@ import java.util.List;
 
 //Solid - Single Responsibility
 public class Service {
-    private Repository repository = new CSVRepository();
-    private List<Category> categoryList = new ArrayList<>();
+    private Repository repository = new BinFileRepository();
+    private List<Category> categoryList;
     private List<User> users;
+
+    private User currentUser;
 
     Service() {
         users = repository.loadUsersFromFile();
+        categoryList = repository.loadCategoriesFromFile();
 
-        List<Problem> basicProblems = basicProblemFactory();
+        /*List<Problem> basicProblems = basicProblemFactory();
         Category basics = new Category("Podstawy", basicProblems);
         categoryList.add(basics);
 
         List<Problem> OOPProblems = OOPProblemFactory();
         Category OOP = new Category("Programowanie obiektowe", OOPProblems);
-        categoryList.add(OOP);
+        categoryList.add(OOP);*/
+    }
+
+    public void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public void clearCurrentUser() {
+        currentUser = null;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public List<Problem> basicProblemFactory() {
@@ -55,6 +70,10 @@ public class Service {
         return false;
     }
 
+    public void updateCategories() {
+        repository.updateCategoriesToFile(categoryList);
+    }
+
     public void addUserToUserList(User newUser) {
         users.add(newUser);
         repository.saveUsersToFile(users);
@@ -62,6 +81,10 @@ public class Service {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public List<Category> getCategories() {
+        return categoryList;
     }
 
     public int getAmountCategories() {
