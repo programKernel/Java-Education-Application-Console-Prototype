@@ -142,21 +142,28 @@ public class Controller {
         while (running) {
             Problem currentProblem = chosenCategory.getProblems().get(problemIndex - 1);
             System.out.println("\n" + currentProblem.getTitle().toUpperCase(Locale.ROOT) + "\n" + currentProblem.getQuestion());
-            if (currentProblem.getComments().size() != 0) {
-                System.out.println("KOMENTARZE:\n");
-                for (int i = 0;i < currentProblem.getComments().size();i++) {
-                    System.out.println(currentProblem.getComments().get(i).getSender().getUsername());
-                    System.out.println(currentProblem.getComments().get(i).getAnswer() + "\n");
-                }
-            }
-            System.out.print("Wpisz komentarz lub cofnij się wpisując 0: ");
+            System.out.print("\nWpisz komentarz, wyświetl komentarze wpisująć \"KOM\" lub cofnij się wpisując 0: ");
             String answer3 = reader.nextLine();
-            if (!answer3.equals("0")) {
+            if (answer3.equals("0")) {
+                running = false;
+            } else if (answer3.equals("KOM")) {
+                displayComments(currentProblem);
+            } else {
                 service.getCategories().get(categoryIndex - 1).getProblems().get(problemIndex - 1).addComment(new Comment(service.getCurrentUser(), answer3));
                 System.out.println("Odpowiedź została zapisana.");
                 service.updateCategories();
+                displayComments(currentProblem);
             }
-            running = false;
+        }
+    }
+
+    public void displayComments(Problem currentProblem) {
+        if (currentProblem.getComments().size() != 0) {
+            System.out.println("\nKOMENTARZE:\n");
+            for (int i = 0;i < currentProblem.getComments().size();i++) {
+                System.out.println(currentProblem.getComments().get(i).getSender().getUsername());
+                System.out.println(currentProblem.getComments().get(i).getAnswer() + "\n");
+            }
         }
     }
 }
